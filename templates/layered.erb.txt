@@ -1,0 +1,6 @@
+<%= title %>
+<%= "#{text_info}, layered annotations" %>
+
+----
+
+<%= layered_plaintext.join %>

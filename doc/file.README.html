@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.34
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Aozora+Bunko+Text+Annotator">Aozora Bunko Text Annotator</h1>
+<hr>
+
+<p>href="https://gitpod.io/#https://github.com/ryancahildebrandt/aozora_annotator"></a> <em>in gitpod</em></p>
+
+<h2 id="label-Purpose"><em>Purpose</em></h2>
+
+<p>This project seeks to reduce the sometimes innumerable number of trips back and forth between your favorite Japanese dictionary and the text you&#39;re reading. The included script parses a text from the Aozora Bunko literature corpus and looks up helpful information for terms in the text via the <a href="https://jotoba.de/docs.html#overview">Jotoba API</a></p>
+<hr>
+
+<h2 id="label-Usage">Usage</h2>
+
+<p>Once you&#39;ve cloned this repo and installed the necessary ruby gems (found in the Gemfile), you&#39;ll need to make sure you have a copy of the <a href="https://www.kaggle.com/datasets/ryancahildebrandt/azbcorpus">Aozora Bunko database file</a> located in the ./data directory. Once you do, you can start annotating!</p>
+
+<p>The easiest way to use this tool is via the command line. From the repo directory:</p>
+
+<pre class="code ruby"><code class="ruby">#to show all cli options and arguments
+ruby azb.rb -h
+
+#to search the database and return all texts with metainfo containing &quot;源氏物語&quot;
+ruby azb.rb -s 源氏物語
+
+#to pull information for text 165444, perform lookups, generate annotations, and render html and plaintext documents to the outputs directory
+ruby azb.rb -i 165444 
+
+# to run the full pipeline as described above, this time with options!
+ruby azb.rb -i 165444 -c -k -f 225%
+</code></pre>
+<hr>
+
+<h2 id="label-Dataset">Dataset</h2>
+
+<p>The dataset used for the current project was pulled from the following:</p>
+<ul><li>
+<p><a href="https://www.kaggle.com/datasets/ryancahildebrandt/azbcorpus">Aozora Bunko Corpus</a> for Japanese full texts</p>
+</li><li>
+<p><a href="https://github.com/WeDontPanic/Jotoba">Jotoba</a> and <a href="https://jotoba.de/docs.html#overview">Jotoba API</a> for looking up terms. Jotoba brings together information from a range of free sources including JMDict, Tofugu, and Tatoeba and all sources are listed <a href="https://jotoba.de/about">here</a></p>
+</li></ul>
+<hr>
+
+<h2 id="label-Outputs">Outputs</h2>
+<ul><li>
+<p>Annotation format breakdown</p>
+<ul><li>
+<p>Alternating</p>
+<ul><li>
+<p>One term with its annotations immediately between it and the next term</p>
+</li><li>
+<p>term (annotation) term (annotation)</p>
+</li><li>
+<p>One term with its annotations immediately between it and the next term</p>
+</li><li>
+<p>term (annotation) term (annotation)</p>
+</li></ul>
+</li><li>
+<p>Layered</p>
+<ul><li>
+<p>One sentence with all its annotations on the following line</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence annotations)</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence annotations)</p>
+</li><li>
+<p>One sentence with all its annotations on the following line</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence annotations)</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence annotations)</p>
+</li></ul>
+</li><li>
+<p>Parallel</p>
+<ul><li>
+<p>Full text with readings rendered above and meanings below, similar to the furigana annotation style commonly used</p>
+</li><li>
+<p>(sentence readings)</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence meanings)</p>
+</li><li>
+<p>Full text with readings rendered above and meanings below, similar to the furigana annotation style commonly used</p>
+</li><li>
+<p>(sentence readings)</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence meanings)</p>
+</li></ul>
+</li><li>
+<p>Side by side</p>
+<ul><li>
+<p>One sentence with all its annotations displayed on the right of the page</p>
+</li><li>
+<p>sentence | (sentence annotations)</p>
+</li><li>
+<p>sentence | (sentence annotations)</p>
+</li><li>
+<p>One sentence with all its annotations displayed on the right of the page</p>
+</li><li>
+<p>sentence | (sentence annotations)</p>
+</li><li>
+<p>sentence | (sentence annotations)</p>
+</li></ul>
+</li><li>
+<p>Alternating</p>
+<ul><li>
+<p>One term with its annotations immediately between it and the next term</p>
+</li><li>
+<p>term (annotation) term (annotation)</p>
+</li></ul>
+</li><li>
+<p>Layered</p>
+<ul><li>
+<p>One sentence with all its annotations on the following line</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence annotations)</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence annotations)</p>
+</li></ul>
+</li><li>
+<p>Parallel</p>
+<ul><li>
+<p>Full text with readings rendered above and meanings below, similar to the furigana annotation style commonly used</p>
+</li><li>
+<p>(sentence readings)</p>
+</li><li>
+<p>sentence</p>
+</li><li>
+<p>(sentence meanings)</p>
+</li></ul>
+</li><li>
+<p>Side by side</p>
+<ul><li>
+<p>One sentence with all its annotations displayed on the right of the page</p>
+</li><li>
+<p>sentence | (sentence annotations)</p>
+</li><li>
+<p>sentence | (sentence annotations)</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>Example outputs, generated from 三十三の死 by しづ素木:</p>
+<ul><li>
+<p><a href="./outputs/000002_三十三の死_alternating.html">Alternating annotations</a> in HTML</p>
+</li><li>
+<p><a href="./outputs/000002_三十三の死_layered.html">Layered annotations</a> in HTML</p>
+</li><li>
+<p><a href="./outputs/000002_三十三の死_parallel.html">Parallel annotations</a> in HTML</p>
+</li><li>
+<p><a href="./outputs/000002_三十三の死_sidebyside.html">Side by side annotations</a> in HTML</p>
+</li><li>
+<p><a href="./outputs/000002_三十三の死_unannotated.html">Unannotated annotations</a> in HTML</p>
+</li><li>
+<p><a href="./outputs/000002_三十三の死_alternating.txt">Alternating annotations</a> in plain text</p>
+</li><li>
+<p><a href="./outputs/000002_三十三の死_layered.txt">Layered annotations</a> in plain text</p>
+</li><li>
+<p><a href="./outputs/000002_三十三の死_unannotated.txt">Unannotated annotations</a> in plain text</p>
+</li></ul>
+</li></ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Sun Sep 17 19:44:52 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.0.2).
+</div>
+
+    </div>
+  </body>
+</html>
