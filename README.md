@@ -30,6 +30,8 @@ ruby azb.rb -i 165444
 ruby azb.rb -i 165444 -c -k -f 225%
 ```
 
+Sometimes the api lookup behavior isn't perfect, so if you're planning on using this as a teaching aid or instructional materials, you can always fine tune the lookups by editing the json file after the initial lookup fetching
+
 ---
 
 ## Dataset
@@ -60,8 +62,8 @@ The dataset used for the current project was pulled from the following:
     - (sentence meanings)
   - Side by side
     - One sentence with all its annotations displayed on the right of the page
-    - sentence | (sentence annotations)
-    - sentence | (sentence annotations)
+    - sentence || (sentence annotations)
+    - sentence || (sentence annotations)
 
 - Example outputs, generated from 三十三の死 by しづ素木:
   - [Alternating annotations](./outputs/000002_三十三の死_alternating.html) in HTML
