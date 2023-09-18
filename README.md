@@ -66,14 +66,14 @@ The dataset used for the current project was pulled from the following:
     - sentence || (sentence annotations)
 
 - Example outputs, generated from 三十三の死 by しづ素木:
-  - [Alternating annotations](./outputs/000002_三十三の死_alternating.html) in HTML
-  - [Layered annotations](./outputs/000002_三十三の死_layered.html) in HTML
-  - [Parallel annotations](./outputs/000002_三十三の死_parallel.html) in HTML
-  - [Side by side annotations](./outputs/000002_三十三の死_sidebyside.html) in HTML
-  - [Unannotated annotations](./outputs/000002_三十三の死_unannotated.html) in HTML
+  - [Alternating annotations](https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_alternating.html) in HTML
+  - [Layered annotations](https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_layered.html) in HTML
+  - [Parallel annotations](https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_parallel.html) in HTML
+  - [Side by side annotations](https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_sidebyside.html) in HTML
+  - [Unannotated](https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_unannotated.html) in HTML
   - [Alternating annotations](./outputs/000002_三十三の死_alternating.txt) in plain text
   - [Layered annotations](./outputs/000002_三十三の死_layered.txt) in plain text
-  - [Unannotated annotations](./outputs/000002_三十三の死_unannotated.txt) in plain text
+  - [Unannotated](./outputs/000002_三十三の死_unannotated.txt) in plain text
 
 ---
 
