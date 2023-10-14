@@ -74,9 +74,3 @@ The dataset used for the current project was pulled from the following:
   - [Alternating annotations](./outputs/000002_三十三の死_alternating.txt) in plain text
   - [Layered annotations](./outputs/000002_三十三の死_layered.txt) in plain text
   - [Unannotated](./outputs/000002_三十三の死_unannotated.txt) in plain text
-
----
-
-# Notes
-
-The matching behavior for the Jotoba API can sometimes return entries that aren't ideal, either a larger term that contains the search query or some such. I intend to improve the matching behavior in this project, but to do so I have to make some improvements to the AZB corpus itself first.
