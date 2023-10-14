@@ -86,6 +86,8 @@ ruby azb.rb -i 165444
 # to run the full pipeline as described above, this time with options!
 ruby azb.rb -i 165444 -c -k -f 225%
 </code></pre>
+
+<p>Sometimes the api lookup behavior isn&#39;t perfect, so if you&#39;re planning on using this as a teaching aid or instructional materials, you can always fine tune the lookups by editing the json file after the initial lookup fetching</p>
 <hr>
 
 <h2 id="label-Dataset">Dataset</h2>
@@ -101,7 +103,7 @@ ruby azb.rb -i 165444 -c -k -f 225%
 <h2 id="label-Outputs">Outputs</h2>
 <ul><li>
 <p>Annotation format breakdown</p>
-<ul><li>
+</li><li>
 <p>Alternating</p>
 <ul><li>
 <p>One term with its annotations immediately between it and the next term</p>
@@ -159,81 +161,44 @@ ruby azb.rb -i 165444 -c -k -f 225%
 <ul><li>
 <p>One sentence with all its annotations displayed on the right of the page</p>
 </li><li>
-<p>sentence | (sentence annotations)</p>
+<p>sentence || (sentence annotations)</p>
 </li><li>
-<p>sentence | (sentence annotations)</p>
+<p>sentence || (sentence annotations)</p>
 </li><li>
 <p>One sentence with all its annotations displayed on the right of the page</p>
 </li><li>
-<p>sentence | (sentence annotations)</p>
+<p>sentence || (sentence annotations)</p>
 </li><li>
-<p>sentence | (sentence annotations)</p>
-</li></ul>
-</li><li>
-<p>Alternating</p>
-<ul><li>
-<p>One term with its annotations immediately between it and the next term</p>
-</li><li>
-<p>term (annotation) term (annotation)</p>
-</li></ul>
-</li><li>
-<p>Layered</p>
-<ul><li>
-<p>One sentence with all its annotations on the following line</p>
-</li><li>
-<p>sentence</p>
-</li><li>
-<p>(sentence annotations)</p>
-</li><li>
-<p>sentence</p>
-</li><li>
-<p>(sentence annotations)</p>
-</li></ul>
-</li><li>
-<p>Parallel</p>
-<ul><li>
-<p>Full text with readings rendered above and meanings below, similar to the furigana annotation style commonly used</p>
-</li><li>
-<p>(sentence readings)</p>
-</li><li>
-<p>sentence</p>
-</li><li>
-<p>(sentence meanings)</p>
-</li></ul>
-</li><li>
-<p>Side by side</p>
-<ul><li>
-<p>One sentence with all its annotations displayed on the right of the page</p>
-</li><li>
-<p>sentence | (sentence annotations)</p>
-</li><li>
-<p>sentence | (sentence annotations)</p>
-</li></ul>
+<p>sentence || (sentence annotations)</p>
 </li></ul>
 </li><li>
 <p>Example outputs, generated from 三十三の死 by しづ素木:</p>
-<ul><li>
-<p><a href="./outputs/000002_三十三の死_alternating.html">Alternating annotations</a> in HTML</p>
 </li><li>
-<p><a href="./outputs/000002_三十三の死_layered.html">Layered annotations</a> in HTML</p>
+<p><a href="https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_alternating.html">Alternating annotations</a> in HTML</p>
 </li><li>
-<p><a href="./outputs/000002_三十三の死_parallel.html">Parallel annotations</a> in HTML</p>
+<p><a href="https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_layered.html">Layered annotations</a> in HTML</p>
 </li><li>
-<p><a href="./outputs/000002_三十三の死_sidebyside.html">Side by side annotations</a> in HTML</p>
+<p><a href="https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_parallel.html">Parallel annotations</a> in HTML</p>
 </li><li>
-<p><a href="./outputs/000002_三十三の死_unannotated.html">Unannotated annotations</a> in HTML</p>
+<p><a href="https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_sidebyside.html">Side by side annotations</a> in HTML</p>
+</li><li>
+<p><a href="https://htmlpreview.github.io/?https://github.com/ryancahildebrandt/aozora_annotator/blob/main//outputs/000002_三十三の死_unannotated.html">Unannotated</a> in HTML</p>
 </li><li>
 <p><a href="./outputs/000002_三十三の死_alternating.txt">Alternating annotations</a> in plain text</p>
 </li><li>
 <p><a href="./outputs/000002_三十三の死_layered.txt">Layered annotations</a> in plain text</p>
 </li><li>
-<p><a href="./outputs/000002_三十三の死_unannotated.txt">Unannotated annotations</a> in plain text</p>
+<p><a href="./outputs/000002_三十三の死_unannotated.txt">Unannotated</a> in plain text</p>
 </li></ul>
-</li></ul>
+<hr>
+
+<h1 id="label-Notes">Notes</h1>
+
+<p>The matching behavior for the Jotoba API can sometimes return entries that aren&#39;t ideal, either a larger term that contains the search query or some such. I intend to improve the matching behavior in this project, but to do so I have to make some improvements to the AZB corpus itself first.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sun Sep 17 19:44:52 2023 by
+  Generated on Sat Oct 14 14:27:13 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.0.2).
 </div>

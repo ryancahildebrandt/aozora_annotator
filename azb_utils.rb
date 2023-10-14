@@ -16,6 +16,7 @@ require "erb"
 # Processes one query lookup via the Jotoba API (https://jotoba.de/)
 #
 # @param query [String] Term to lookup
+# @param target_reading [String] Reading to match for term, if not availabe in jotoba response, defaults to the first entry in the response
 # @return [Hash] parsed api response, schema:
 #   term: [String] query returned from api, may or may not be an exact match to query,
 #   common: [Bool] is returned term marked as common by jotoba api?,
@@ -27,7 +28,7 @@ require "erb"
 # @example jotoba_lookup("曇り")
 #   {"term"=>"曇り", "common"=>true, "kana"=>"くもり", "kanji"=>"曇り", "furigana"=>"曇|くもり", "meaning"=>"cloudiness, cloudy weather", "info"=>nil}
 # @see https://jotoba.de/docs.html#overview
-def jotoba_lookup(query)
+def jotoba_lookup(query, target_reading)
     request = {
         :body => {
             "query" => query, 
@@ -42,7 +43,7 @@ def jotoba_lookup(query)
     }
     response = api_query_check(query) ? HTTParty.post("https://jotoba.de/api/search/words", request).parsed_response : {"words" => []}
     
-    if response["words"] == []
+    if (response["words"].empty? || response["words"].nil?)
         out = {
             "term" => nil,
             "common" => nil,
@@ -53,14 +54,15 @@ def jotoba_lookup(query)
             "info" => nil
         }
     else
+        response_word_index = response["words"].map{|x| x["reading"]["kana"]}.index(target_reading) || 0
         out = {
             "term" => query,
-            "common" => response["words"][0]["common"],
-            "kana" => response["words"][0]["reading"]["kana"],
-            "kanji" => response["words"][0]["reading"]["kanji"],
-            "furigana" => response["words"][0]["reading"]["furigana"].to_s.delete(']['),
-            "meaning" => response["words"][0]["senses"][0]["glosses"].to_s.delete('"]['),
-            "info" => response["words"][0]["senses"][0]["information"]
+            "common" => response["words"][response_word_index]["common"],
+            "kana" => response["words"][response_word_index]["reading"]["kana"],
+            "kanji" => response["words"][response_word_index]["reading"]["kanji"],
+            "furigana" => response["words"][response_word_index]["reading"]["furigana"].to_s.delete(']['),
+            "meaning" => response["words"][response_word_index]["senses"][0]["glosses"].to_s.delete('"]['),
+            "info" => response["words"][response_word_index]["senses"][0]["information"]
         }
     end
     return out
@@ -73,7 +75,7 @@ end
 # @example api_query_check("曇り")
 #   true
 def api_query_check(query)
-    return query.nil? ? false : !(query.length == 1 && %r{[ぁ-ん]}.match?(query) || query.length == 0)
+    return query.nil? ? false : !(query.length == 1 && %r{[ぁ-んァ-ン\u3000-\u303F\w]}.match?(query) || query.length == 0)
 end
 
 # Formats string containing given term, meaning, and reading for rendering furigana in html
@@ -138,6 +140,24 @@ def sized_span(text, size_str)
     return "<span style = \"font-size: #{size_str}\">#{text}</span>"
 end
 
+# Converts output from furigana table to hash for use in lookup checking
+#
+# @param text [String] text to be sized
+# @param size_str [String] font style string to scale text
+# @return [String] formatted html span
+# @example sized_span("曇り", "150%")
+#   "<span style = \"font-size: 150%\">曇り</span>"
+def process_furigana(db_result, segmenter)
+	out = {}
+	db_result.each do |context, reading|
+		tok = segmenter.segment(context)
+		key = tok[tok.index("（") - 1]
+		val = reading[/[ぁ-んァ-ンヽゞゝ／″＼]+/]
+		out[key] = val
+	end
+	return out
+end
+
 # classes
 # AzbText class for storing and working with text information and annotation renderings
 class AzbText
@@ -163,6 +183,9 @@ class AzbText
         # @!attribute full_text
         #   @return [String] full text of selected text
         :full_text,
+        # @!attribute furigana
+        #   @return [Hash] furigana provided in azb text
+        :furigana,
         # @!attribute lookups_file
         #   @return [String] path to lookups file of selected text, if already saved
         :lookups_file,
@@ -214,25 +237,25 @@ class AzbText
     #       ["047493", "キャラコさん", "十蘭久生", "08 月光曲", "小説、物語", "2009-01-25"]
     def search(query)
         base_query = "
-        SELECT work_id, work_name, author, subtitle, genre, publication_date
+        SELECT 作品ID, 作品名, 著者, 副題, 分類, 底本初版発行年1
         FROM works
         JOIN (
-            SELECT author, author_id 
+            SELECT 著者, 人物ID 
             FROM authors
         )
-        USING (author_id)
+        USING (人物ID)
         WHERE
-        work_id LIKE '%#{query}%'
+        作品ID LIKE '%#{query}%'
         OR
-        work_name LIKE '%#{query}%'
+        作品名 LIKE '%#{query}%'
         OR 
-        author LIKE '%#{query}%'
+        著者 LIKE '%#{query}%'
         OR 
-        subtitle LIKE '%#{query}%'
+        副題 LIKE '%#{query}%'
         OR 
-        genre LIKE '%#{query}%'
+        分類 LIKE '%#{query}%'
         OR 
-        publication_date LIKE '%#{query}%'
+        底本初版発行年1 LIKE '%#{query}%'
         "
         results = self.db.query(base_query)
         puts "Search results for query #{query}"
@@ -249,26 +272,27 @@ class AzbText
     #       Text added successfully | ID: 047492 | Title: キャラコさん | Author: 十蘭久生 | Length: 14137
     def pull_text(work_id)
         text_query = "
-        SELECT work_id, work_name, author, main_text, n_char
+        SELECT 作品ID, 作品名, 著者, 本文, 本文字数
         FROM works
         JOIN (
-            SELECT author, author_id 
+            SELECT 著者, 人物ID 
             FROM authors
         )
-        USING (author_id)
+        USING (人物ID)
         JOIN (
-            SELECT work_id, main_text, n_char 
+            SELECT 作品ID, 本文, 本文字数 
             FROM texts
-            WHERE work_id = '#{work_id}'
+            WHERE 作品ID = '#{work_id}'
         )
-        USING (work_id)
+        USING (作品ID)
         "
-        valid_ids = self.db.query("SELECT work_id FROM works").entries.flatten
+        valid_ids = self.db.query("SELECT 作品ID FROM works").entries.flatten
         if valid_ids.include?(work_id)
             results = self.db.query(text_query).entries.first
             self.id, self.title, self.author, self.full_text, self.n_char = results
             self.lookups_file = "data/#{self.id}_#{self.title}.json"
             self.output_prefix = "outputs/#{self.id}_#{self.title}"
+            self.furigana = process_furigana(self.db.query("SELECT 前後関係, 振り仮名 FROM furigana WHERE 作品ID = '#{work_id}'").entries, self.tagger)
             puts "Text added successfully | ID: #{self.id} | Title: #{self.title} | Author: #{self.author} | Length: #{self.n_char}"
         else
             begin
@@ -292,11 +316,11 @@ class AzbText
         progressbar = ProgressBar.create(
             :title => "Token lookup progress", 
             :total => self.unique_tokens.length, 
-            :progress_mark => "/", 
+            :progress_mark => "・", 
             :format => "%t: %c/%C |%B| %p%%"
         )
         self.unique_tokens.each do |term|
-            self.lookups[term] = jotoba_lookup(term)
+            self.lookups[term] = jotoba_lookup(term, self.furigana[term])
             progressbar.increment
         end
     end
