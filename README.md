@@ -16,7 +16,7 @@ Once you've cloned this repo and installed the necessary ruby gems (found in the
 
 The easiest way to use this tool is via the command line. From the repo directory:
 
-```ruby
+```bash
 #to show all cli options and arguments
 ruby azb.rb -h
 
