@@ -3,9 +3,9 @@
 ---
 
 [![Open in gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ryancahildebrandt/aozora_annotator)
-[![This project contains 0% LLM-generated content](https://brainmade.org/88x31-dark.png)](https://brainmade.org/
+[![This project contains 0% LLM-generated content](https://brainmade.org/88x31-dark.png)](https://brainmade.org/)
 
-## *Purpose*
+## _Purpose_
 
 This project seeks to reduce the sometimes innumerable number of trips back and forth between your favorite Japanese dictionary and the text you're reading. The included script parses a text from the Aozora Bunko literature corpus and looks up helpful information for terms in the text via the [Jotoba API](https://jotoba.de/docs.html#overview)
 
@@ -25,7 +25,7 @@ ruby azb.rb -h
 ruby azb.rb -s 源氏物語
 
 #to pull information for text 165444, perform lookups, generate annotations, and render html and plaintext documents to the outputs directory
-ruby azb.rb -i 165444 
+ruby azb.rb -i 165444
 
 # to run the full pipeline as described above, this time with options!
 ruby azb.rb -i 165444 -c -k -f 225%
@@ -47,6 +47,7 @@ The dataset used for the current project was pulled from the following:
 ## Outputs
 
 - Annotation format breakdown
+
   - Alternating
     - One term with its annotations immediately between it and the next term
     - term (annotation) term (annotation)
