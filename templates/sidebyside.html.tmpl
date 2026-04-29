@@ -1,0 +1,30 @@
+{{- define "sidebyside" -}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ .Title }}</title>
+        <meta charset = "UTF-8">
+    </head>
+    <body>
+        <h1>{{ .Title }}</h1>
+        <h5>Written by {{ .Author }}, {{ .Length }} characters in length, {{ annotationType }}</h5>
+        <hr>
+        <p>
+        {{ range .Sentences }}
+            <div style = "display: inline-block; width: 100%">
+                <div class = "column" style = "width: 20%; float: left; font-size: {{ sizeString }}"><p>{{ .Text }}</p></div>
+                <div class = "column" style = "width: 78%; float: right"><p>
+                {{- range .Tokens -}}
+                    {{ if valid . }}[{{ furigana . }};{{ meaning . }}]&nbsp&nbsp&nbsp&nbsp{{- end -}}
+                {{- end -}}
+                </p></div>
+            </div>
+        {{- end -}}
+        </p>
+    </body>	
+</html>
+{{- end -}}
+
+
+
+

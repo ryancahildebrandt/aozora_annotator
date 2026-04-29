@@ -1,6 +1,0 @@
-<%= title %>
-<%= "#{text_info}, alternating annotations" %>
-
-----
-
-<%= alternating_plaintext.join %>

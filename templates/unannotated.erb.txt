@@ -1,6 +1,0 @@
-<%= title %>
-<%= "#{text_info}, layered annotations" %>
-
-----
-
-<%= full_text %>

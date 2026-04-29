@@ -1,0 +1,25 @@
+{{- define "parallel" -}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ .Title }}</title>
+        <meta charset = "UTF-8">
+    </head>
+    <body>
+        <h1>{{ .Title }}</h1>
+        <h5>Written by {{ .Author }}, {{ .Length }} characters in length, {{ annotationType }}</h5>
+        <hr>
+        <p>
+        {{ range .Sentences }}
+            <div style = \"display: block; width: 100%;\">
+                <p>
+                    {{ range .Tokens -}}
+                        <ruby><rb>{{ . }}</rb><rt>{{ furigana . }}</rt><rtc>{{ meaning . }}</rtc><ruby>                        
+                    {{- end -}}
+                </p>
+            </div>
+        {{- end -}}
+        </p>
+    </body>	
+</html>
+{{- end -}}

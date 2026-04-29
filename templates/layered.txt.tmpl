@@ -1,0 +1,10 @@
+{{- define "layered" -}}
+{{ template "frontmatter" . }}
+{{ range .Sentences }}
+{{ .Text }}  
+{{ range .Tokens -}}
+{{ if valid . }}{{.}} <{{ furigana . }};{{ meaning . }}>    {{ end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+

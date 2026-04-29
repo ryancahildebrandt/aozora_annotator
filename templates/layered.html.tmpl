@@ -1,0 +1,26 @@
+{{- define "layered" -}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ .Title }}</title>
+        <meta charset = "UTF-8">
+    </head>
+    <body>
+        <h1>{{ .Title }}</h1>
+        <h5>Written by {{ .Author }}, {{ .Length }} characters in length, {{ annotationType }}</h5>
+        <hr>
+        <p>
+        {{ range .Sentences }}
+            <div style = \"display: block; width: 100%;\">
+                <p>{{ .Text }}</p>
+                <p>
+                    {{ range .Tokens -}}
+                        <span style = "font-size: {{ sizeString }}">{{.}}</span>{{ if valid . }}[{{ furigana . }};{{ meaning . }}]&nbsp&nbsp&nbsp&nbsp{{ end -}}
+                    {{- end -}}
+                </p>
+            </div>
+        {{- end -}}
+        </p>
+    </body>	
+</html>
+{{- end -}}

@@ -1,0 +1,9 @@
+{{- define "alternating" -}}
+{{ template "frontmatter" . }}
+{{ range .Sentences }}
+    {{- range .Tokens -}}
+        {{.}}{{ if valid . }}<{{ furigana . }};{{ meaning . }}> {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- end -}}
+

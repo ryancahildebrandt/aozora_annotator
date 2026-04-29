@@ -1,0 +1,21 @@
+{{- define "alternating" -}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ .Title }}</title>
+        <meta charset = "UTF-8">
+    </head>
+    <body>
+        <h1>{{ .Title }}</h1>
+        <h5>Written by {{ .Author }}, {{ .Length }} characters in length, {{ annotationType }}</h5>
+        <hr>
+        <p>
+        {{ range .Sentences }}
+            {{- range .Tokens -}}
+                <span style = "font-size: {{ sizeString }}">{{.}}</span>{{ if valid . }}[{{ furigana . }};{{ meaning . }}] {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        </p>
+    </body>	
+</html>
+{{- end -}}
